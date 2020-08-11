@@ -1,0 +1,84 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="babel.min.js"></script>
+    <script src="react.prod.min.js"></script>
+    <script src="react-DOM.prod.min.js"></script>
+    
+    <title>Document</title>
+</head>
+<body>
+    <div id = "app"></div>
+
+    <script type="text/babel">
+    class AddDetails extends React.Component {
+    state = {
+        'name': null,
+        'rno': null,
+        'hometown': null
+    }
+    handleChange = (e) => {
+        this.setState({
+            [e.target.id]: e.target.value
+        })
+    }
+    handleSubmit = (e) => {
+        e.preventDefault()
+        this.props.addDetails(this.state)
+    }
+    render(){
+        return (
+            <div>
+                <form onSubmit = {this.handleSubmit}>
+                    <label htmlFor="text">Name</label><br />
+                    <input type="text" id='name' onChange = {this.handleChange}/><br /><br />
+                    <label htmlFor="text">Roll Number</label><br />
+                    <input type="text" id='rno' onChange = {this.handleChange}/><br /><br />
+                    <label htmlFor="text">Hometown</label><br />
+                    <input type="text" id='hometown' onChange = {this.handleChange}/><br /><br />
+                    <button type='submit'>Submit</button>
+                </form>
+            </div>
+        )
+    }
+    }
+
+    class App extends React.Component {
+        state = {
+            'name': null, 
+            'rno': null, 
+            'hometown': null            
+        }
+        addDetails = (ninja) => {
+        this.setState({
+            'name': ninja.name,
+            'rno': ninja.rno,
+            'hometown': ninja.hometown
+        })
+        }
+    render() {
+        return (
+            <div>
+                <AddDetails addDetails = {this.addDetails}/>
+                <XYZlamb person = {this.state}/>
+            </div>
+        )
+    }
+    }
+
+    const XYZlamb = ({person}) => {
+        return person.name ? (
+            <div>
+                <h2>Hello!</h2>
+                <h3>Name: {person.name}</h3>
+                <h3>Roll Number: {person.rno}</h3>
+                <h3>Hometown: {person.hometown}</h3>
+            </div>
+        ) : null
+    }
+
+    ReactDOM.render(<App />, document.getElementById('app'));
+    </script>
+</body>
+</html>
